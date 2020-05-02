@@ -268,6 +268,7 @@ export default {
   
   data() {
     return {
+                  port:'https://dataprjct.herokuapp.com',
     dataFromPusher:store.getters.giveTrigger,
     currentData:[],
       dimVal: [],
@@ -449,7 +450,7 @@ console.log(this.currentData)
       //andme tüübi rippmenüüsse salvestamine vastavalt ruumi
       this.$http
         .get(
-          "http://localhost:3000/api/data/valuetypes/" + this.storedRoom + ""
+          this.port+"/api/data/valuetypes/" + this.storedRoom + ""
         )
         .then(response => {
           return response.json();
@@ -569,7 +570,7 @@ console.log(this.currentData)
       try {
         await this.$http
           .get(
-            "http://localhost:3000/api/data/" +
+            this.port+"/api/data/" +
               this.storedRoom +
               "/" +
               moment(this.singleDay).format("YYYY-MM-DD") +
@@ -609,7 +610,7 @@ console.log(this.currentData)
         if (this.dateStart !== "" && this.dateEnd !== "") {
           await this.$http
             .get(
-              "http://localhost:3000/api/data/room/interval/" +
+              this.port+"/api/data/room/interval/" +
                 moment(this.dateStart).format("YYYY-MM-DD") +
                 "/" +
                 moment(this.dateEnd).format("YYYY-MM-DD") +
@@ -686,7 +687,7 @@ console.log(this.currentData)
   created() {
     
     this.$http
-      .get("http://localhost:3000/api/dimensions/valuetypes")
+      .get(this.port+"/api/dimensions/valuetypes")
       .then(response => {
         return response.json();
       })

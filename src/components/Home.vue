@@ -95,6 +95,7 @@ export default {
   },
   data() {
     return {
+            port:'https://dataprjct.herokuapp.com',
       hover: false,
       pusherArray:store.getters.giveTrigger,
       valuetypeOtp1:'T',
@@ -148,7 +149,7 @@ export default {
     var intervalType='hours';  //years,months,hours //https://www.postgresqltutorial.com/postgresql-interval/
     var intervalTime='1';
     this.$http
-      .get('http://localhost:3000/api/avaragedata/rooms/interval/'+intervalType +'/' + intervalTime +'')
+      .get(this.port+'/api/avaragedata/rooms/interval/'+intervalType +'/' + intervalTime +'')
       .then(response => {
         return response.json();
       })
@@ -162,7 +163,7 @@ export default {
       });
     //rippmenüü täitmine
     this.$http
-      .get("http://localhost:3000/api/rooms")
+      .get(this.port+'/api/rooms')
       .then(response => {
         return response.json();
       })
@@ -190,7 +191,7 @@ export default {
     //massiivi täitmine andmetega igale ruumile
 
     this.$http
-      .get("http://localhost:3000/api/controller/sensor/room")
+      .get(this.port+"/api/controller/sensor/room")
       .then(response => {
         return response.json();
       })
