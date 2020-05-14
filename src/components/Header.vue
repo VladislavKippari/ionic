@@ -1,18 +1,18 @@
 <template>
       <ion-tab-bar id="progressbar" slot="bottom">
-        <ion-router-link href="/rooms">
+        <router-link to="/rooms">
         <ion-tab-button>
           <ion-label>Rooms</ion-label>
           <ion-icon name="home-outline"></ion-icon>
         </ion-tab-button>
-        </ion-router-link>
+        </router-link>
 
-        <ion-router-link  href="/roominfo">
+        <router-link  to="/roominfo">
         <ion-tab-button >
           <ion-label>Room info</ion-label>
           <ion-icon name="information-circle-outline"></ion-icon>
         </ion-tab-button>
-        </ion-router-link>
+        </router-link>
       </ion-tab-bar>
 </template>
 
