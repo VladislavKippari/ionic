@@ -45,7 +45,7 @@ Pusher.logToConsole = true;
     var sensorDuplicate=0;
     var dateCheck;
     var channel = pusher.subscribe('watch_datasensor4');
-     channel.bind('my-event', function(data) {
+     channel.bind('my-event2', function(data) {
         if(count===0){
          dateCheck=new Date(Date.parse(data.date));
          count++
