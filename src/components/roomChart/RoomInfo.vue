@@ -692,7 +692,8 @@ export default {
     window.addEventListener("unload", this.handler);
   },
   async created() {
-    
+        this.showCurrentData()
+
     this.$http
       .get(this.port+"/api/dimensions/valuetypes")
       .then(response => {
