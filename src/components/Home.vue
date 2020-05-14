@@ -178,9 +178,7 @@ export default {
           sensitivity: "base"
         });
         this.roomList.sort(collator.compare);
-        
-
-              this.$store.commit('roomsFill',this.roomList);
+        this.$store.commit('roomsFill',this.roomList);
       });
     //massiivi täitmine andmetega igale ruumile
 

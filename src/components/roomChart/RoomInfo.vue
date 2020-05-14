@@ -707,7 +707,6 @@ export default {
       
       });
    this.storedRoom = this.$store.getters.giveroom;
-    this.roomList = this.$store.getters.giveRooms;
        await this.$http
       .get(this.port+'/api/rooms')
       .then(response => {
@@ -733,8 +732,9 @@ export default {
         });
         this.roomList.sort(collator.compare);
         
-
+            if(this.$store.getters.giveRooms.length===0){
               this.$store.commit('roomsFill',this.roomList);
+            }
       });
   }
   
