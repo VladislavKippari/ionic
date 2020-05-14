@@ -1,47 +1,27 @@
 <template>
-
- 
-
-    
       <ion-tab-bar id="progressbar" slot="bottom">
-              <ion-router-link href="/rooms">
+        <ion-router-link href="/rooms">
         <ion-tab-button>
           <ion-label>Rooms</ion-label>
           <ion-icon name="home-outline"></ion-icon>
         </ion-tab-button>
-         </ion-router-link>
-     
-                  <ion-router-link  href="/roominfo">
+        </ion-router-link>
 
+        <ion-router-link  href="/roominfo">
         <ion-tab-button >
           <ion-label>Room info</ion-label>
           <ion-icon name="information-circle-outline"></ion-icon>
         </ion-tab-button>
-         </ion-router-link>
-        
+        </ion-router-link>
       </ion-tab-bar>
-    
-     
-
 </template>
 
 <script>
 export default {
     data(){
       return{
-        classes: []
       }
-    },methods: {
-  	hoverOver() {
-    
-    	this.classes = ['animated', 'rubberBand']
-    },
-    hoverOut() {
-    
-    	this.classes = []
-    },
-    
-  }
+    }
 }
 </script>
 

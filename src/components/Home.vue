@@ -1,18 +1,16 @@
 <template >   
-  
-    
-
-      
-    
     <ion-content>
-      <ion-header translucent>
+      <ion-header >
       <ion-toolbar>
         <ion-title>Rooms</ion-title>
       </ion-toolbar>
     </ion-header>
-        <ion-grid >
+
+
+<ion-grid >
   <ion-row >
-      <ion-col class="zindexdrop" size-xl="4" size-lg="4" size-md="4" size-sm="12" size-xs="12">
+      <ion-col class="zindexdrop" size-xl="4" size-lg="4" 
+      size-md="4" size-sm="12" size-xs="12">
        <div  class="room-wrapper  animated slideInLeft">
         <custom-select 
           v-model="roomSearch"
@@ -24,7 +22,8 @@
      
      
     </ion-col>
-     <ion-col class="zindexdrop2"  size-xl="4" size-lg="4" size-md="4" size-sm="12" size-xs="12">
+     <ion-col class="zindexdrop2"  size-xl="4" size-lg="4" 
+     size-md="4" size-sm="12" size-xs="12">
      <div class="sensor-wrapper animated fadeIn">
 
         <custom-select
@@ -35,7 +34,8 @@
         ></custom-select>
       </div>
     </ion-col>
-     <ion-col class="zindexdrop3"  size-xl="4" size-lg="4" size-md="4" size-sm="12" size-xs="12">
+     <ion-col class="zindexdrop3"  size-xl="4" size-lg="4" 
+     size-md="4" size-sm="12" size-xs="12">
      <div class="controller-wrapper  animated slideInRight">
         <custom-select
           v-model="controllerSearch"
@@ -52,26 +52,21 @@
       </ion-grid>
 
   
-      <ion-grid>
-  <ion-row >
-    <ion-col  size-xl="3" size-lg="3" size-md="4" size-sm="4" size-xs="6"  v-for="room in filterRooms"  :key="room.room">
-      
-        <ion-item   detail='false' lines="none"  button @click="$router.push('/roominfo')">
-        
+  <ion-grid>
+  <ion-row>
+    <ion-col  size-xl="3" size-lg="3" size-md="4" size-sm="4"
+     size-xs="6"  v-for="room in filterRooms"  :key="room.room">
+        <ion-item   detail='false' lines="none"  button v-on:click="$router.push('/roominfo')">
           <ion-label v-on:click="selectedRoom(room.room)" >
            <p class="img-wrapper items round">
-        
-      {{room.room}}
-        
-      </p>
+              {{room.room}}
+            </p>
           </ion-label>
         </ion-item>
-     
     </ion-col>
   </ion-row>
-
-
-</ion-grid>
+  </ion-grid>
+  
  </ion-content>
   
 
@@ -81,17 +76,13 @@
 <script>
 
 import store from '../store/store';
-import Container from "./transitionHomeTiles/Container";
-import Item from "./transitionHomeTiles/Item";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import {mapMutations} from 'vuex';
 
 export default {
   components: {
-    Container, //ruumide kuvamiseks koht
-    Item, //komponent ühe tuppa kuvamiseks
-    vSelect //rippmenüü
+    vSelect 
   },
   data() {
     return {
@@ -119,7 +110,8 @@ export default {
   methods: {
      
       ...mapMutations([
-          'selectedRoom'
+          'selectedRoom',
+          'roomsFill'
        ]),
     hoverMouse() {
       this.hover = true;
@@ -144,7 +136,7 @@ export default {
       return 0;
     }
   },
-  created() {
+ async  created() {
     //keskmise andmete paigaldamine
     var intervalType='hours';  //years,months,hours //https://www.postgresqltutorial.com/postgresql-interval/
     var intervalTime='1';
@@ -162,7 +154,7 @@ export default {
         this.avgDataList = resultArray[1];
       });
     //rippmenüü täitmine
-    this.$http
+   await this.$http
       .get(this.port+'/api/rooms')
       .then(response => {
         return response.json();
@@ -186,8 +178,10 @@ export default {
           sensitivity: "base"
         });
         this.roomList.sort(collator.compare);
+        
+
+              this.$store.commit('roomsFill',this.roomList);
       });
-      this.$store.commit('roomsFill',this.roomList);
     //massiivi täitmine andmetega igale ruumile
 
     this.$http

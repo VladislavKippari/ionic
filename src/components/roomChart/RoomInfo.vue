@@ -5,7 +5,7 @@
       
 
     <ion-content>
-      <ion-header translucent>
+      <ion-header>
       <ion-toolbar>
         <ion-title>Room info</ion-title>
       </ion-toolbar>
@@ -19,7 +19,7 @@
             <ion-grid >
   <ion-row >
       <ion-col >
-      <ion-item   detail='false' lines="none"  button @click="monthly=true;choice=false;">
+      <ion-item   detail='false' lines="none"  button @click="monthly=true;choice=false">
           <ion-label  >
            <p class="img-wrapper items round">
                 Months
@@ -228,6 +228,7 @@ import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import Datepicker from "vuejs-datepicker";
 var moment = require("moment");
+import {mapGetters} from 'vuex';
 
 const options = {
 responsive:true,
@@ -283,7 +284,7 @@ export default {
       arrSingleDay: [],
       singleDayValueType: "",
       singleDay: "",
-      storedRoom: "",
+      storedRoom: '',
       dateStart: "",
       dateEnd: "",
       hoursStart: "",
@@ -410,6 +411,11 @@ export default {
     }
   },
   methods: {
+   
+    ...mapGetters([
+          'giveroom',
+          'giveRooms'
+       ]),
      compare( a, b ) {
     if ( a.valuetype.toLowerCase() < b.valuetype.toLowerCase() ){
       return -1;
@@ -441,9 +447,9 @@ export default {
         this.currentData[index].sensor=(filtered[index].sensorname)
         this.currentData[index].id=(' - '+filtered[index].id)
       }
-      console.log(this.currentData)
+      
               this.currentData.sort(this.compare);
-console.log(this.currentData)
+
       },
     
     dropDvalues() {
@@ -625,6 +631,7 @@ console.log(this.currentData)
                 resultArray.push(data[key]);
               }
               this.dataChart = resultArray[1];
+               
             });
         }
       } catch (error) {
@@ -668,6 +675,7 @@ console.log(this.currentData)
           );
         }
         this.refreshChart();
+        
       }
     },
     customFormatter(date) {
@@ -679,12 +687,11 @@ console.log(this.currentData)
     window.removeEventListener("unload", this.handler);
   },
   mounted() {
-   console.log(store.getters.giveTrigger)
 
 
     window.addEventListener("unload", this.handler);
   },
-  created() {
+  async created() {
     
     this.$http
       .get(this.port+"/api/dimensions/valuetypes")
@@ -697,17 +704,46 @@ console.log(this.currentData)
           resultArray.push(data[key]);
         }
         this.dimVal = resultArray[1];
+      
       });
-    this.storedRoom = this.$store.getters.giveroom;
+   this.storedRoom = this.$store.getters.giveroom;
     this.roomList = this.$store.getters.giveRooms;
+       await this.$http
+      .get(this.port+'/api/rooms')
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        //andmete salvestamine andmebaasist
+        const resultArray = [];
+        for (let key in data) {
+          resultArray.push(data[key]);
+        }
+        //rippmenuu ruumid taitmine
+        var object = resultArray[1];
+        for (var property in object) {
+          if (object[property].room != null) {
+            this.roomList.push(object[property].room);
+          }
+        }
+        //ruumide loendi sorteerimine (kasv)
+        var collator = new Intl.Collator(undefined, {
+          numeric: true,
+          sensitivity: "base"
+        });
+        this.roomList.sort(collator.compare);
+        
 
+              this.$store.commit('roomsFill',this.roomList);
+      });
   }
+  
 };
 </script>
 
 <style scoped>
 ion-grid{
-  padding-top: 10px;
+  padding-top: 5px !important;
 }
 .margintop2{
  

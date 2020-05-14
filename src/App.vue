@@ -1,23 +1,17 @@
 <template>
-
  <div>
    <ion-app>
-        
          <router-view ></router-view>
-         <app-header></app-header>
+         <app-menu></app-menu>
    </ion-app>
   </div>
 </template>
 
 <script>
 import Header from './components/Header';
-import Footer from './components/Footer';
-
- 
 export default {
 components:{
-'app-header':Header,
-'app-footer':Footer
+'app-menu':Header,
   }
 };
 </script>
