@@ -36,7 +36,7 @@ const router = new IonicVueRouter({
 });
 Pusher.logToConsole = true;
 
-   var pusher = new Pusher('bd5d7310044a12129c50', {
+   var pusher = new Pusher('', {
       cluster: 'eu',
       forceTLS: true
     });
