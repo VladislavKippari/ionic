@@ -137,9 +137,12 @@ export default {
     }
   },
  async  created() {
+       this.$http.get("https://currdata.herokuapp.com/api/wakeup")
+
     //keskmise andmete paigaldamine
     var intervalType='hours';  //years,months,hours //https://www.postgresqltutorial.com/postgresql-interval/
     var intervalTime='1';
+      this.$http.get()
     this.$http
       .get(this.port+'/api/avaragedata/rooms/interval/'+intervalType +'/' + intervalTime +'')
       .then(response => {
