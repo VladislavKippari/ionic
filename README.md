@@ -3,7 +3,7 @@
 > Front end part for outputing data
 
 ## Build Setup
-make sure you have installed Node.js
+Make sure you have installed Node.js
 
 Data coming from API hosted on Heroku 
 
